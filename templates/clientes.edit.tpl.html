@@ -1,0 +1,16 @@
+<form id="edit" name="edit" 
+		action="index.php?module=clientes&action=edit&id={$datos.id}" method="post">
+	<label for="data[nombre]">Nombre de Cliente</label>
+	<input type="text" id="nombre" tabindex="1" 
+	name="data[nombre]" value="{$datos.nombre}"/><br />
+	<label for="data[cif]">CIF</label>
+	<input type="text" id="cif" tabindex="2" 
+	name="data[cif]" value="{$datos.cif}"/><br />
+	<input type="hidden" name="data[id]" 
+	value="{$datos.id}"/>
+	<input 
+	type="submit" name="data[submit]" 
+	id="submit" value="Enviar"/><br />
+</form>
+<br/>
+<a href="index.php?module=clientes&action=listado">Volver</a>

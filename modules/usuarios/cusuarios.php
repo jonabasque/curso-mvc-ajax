@@ -1,7 +1,7 @@
 <?php
 class Cusuarios extends Controlador{
-	function Cusuarios($module,&$modelo){
-		parent::Controlador($module,$modelo);
+	function Cusuarios($module,&$modelo,&$vista){
+		parent::Controlador($module,$modelo,$vista);
 		global $host,$username,$password,$database;
 		$database="usuarios";
 		//cargo el modelo
@@ -11,6 +11,7 @@ class Cusuarios extends Controlador{
 								$password,
 								$database);
 		$this->carga_accion();
+		$vista->display("index.tpl");
 	}
 
 
@@ -19,6 +20,65 @@ class Cusuarios extends Controlador{
 			if ($valor==$aprovs[$pos]) {
 				echo ' selected="true" ';
 			}
+		
+	}
+	function action_login(){
+		if (isset($_POST['data'])) {
+			//echo "proceso del formulario";
+			$valida=false;
+			$datos=$_POST['data'];
+			if (isset($datos['username']) &&
+				$datos['username']!=null &&
+				$datos['username']!="" &&
+				isset($datos['password']) &&
+				$datos['password']!=null &&
+				$datos['password']!=""
+				){
+				$valida=true;
+			}
+			if ($valida==true) {
+				//comprobacion de la contraseña y el user
+				
+				$sql=" select * from usuario where ";
+				$sql.= " username='".$datos['username']."'";
+				echo $sql;
+				$respuesta=$this->consulta($sql);
+				if (is_array($respuesta) 
+					&& count($respuesta)==1
+					) {
+					//todo chuta
+					$enc=$respuesta[0]['encmethod'];
+					switch ($enc){
+						case 'none':
+							$encpass=$datos['password'];
+							break;
+						case "MD5":
+							$encpass=md5($datos['password']);
+					}
+					
+					if($encpass==$respuesta[0]['pass']){
+						$mensaje="bienvenido ".$datos['username'];
+						$this->pasa_vista("mensaje", $mensaje);
+						$this->redir("validated");
+					}else{
+						$mensaje="usuario o contraseña Inválidos ";
+						$this->pasa_vista("datos", $datos);
+					}
+				}else{
+					
+				}
+				$this->pasa_vista("mensaje", $mensaje);
+			}
+		}else{
+			$datos=array();
+			$datos['username']="";
+			$datos['password']="";
+			$this->pasa_vista("datos", $datos);
+		}
+		
+		
+	}
+	function action_validated(){
 		
 	}
 	function action_register(){
@@ -87,7 +147,7 @@ class Cusuarios extends Controlador{
 				//)
 				$sql = "insert into usuario values (".
 				"NULL,'".$user['usuario']."','".
-				$user['pass']."',".
+				md5($user['pass'])."',".
 				"'".$user['email']."',".
 				"'".$user['cp']."',"
 				;
@@ -105,7 +165,7 @@ class Cusuarios extends Controlador{
 					$cond=0;
 				}
 				$sql.=$cond;
-				$sql.=")";
+				$sql.=",'MD5')";
 				echo $sql."<br/>";
 				//ejecuto la sql
 				$respuesta=insert($sql);

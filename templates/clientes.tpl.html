@@ -1,26 +1,13 @@
-
-<a href='index.php?module=clientes&action=add'>Add</a><br />
-<form action="index.php?module=clientes&action=listado" method="post">
-	<label for="patron">Buscar:</label>
-	<input type="text" name="patron" id="patron"
-	value="{$patron}"
-	/>
-	<input type="submit" name="submit" id="submit" 
-	value="Buscar" />
-</form>
-<br/>
-
-<table>
-	{foreach from=$datos item=registro}
-			<tr>
-			<td>{$registro.id}</td>
-			<td>{$registro.nombre}</td>
-			<td>{$registro.cif}</td>
-			<td>
-			<a href='index.php?module=clientes&action=show&id={$registro.id}'>Mostrar</a><br/>
-			<a href='index.php?module=clientes&action=edit&id={$registro.id}'>Editar</a><br/>
-			<a href='index.php?module=clientes&action=delete&id={$registro.id}'>Borrar</a><br/>
-			</td>
-			</tr>
-	{/foreach}
-</table>
+{if $action eq "listado"}
+	{include file="clientes.listado.tpl.html"}
+{elseif $action eq "add"}
+	{include file="clientes.add.tpl.html"}
+{elseif $action eq "show"}
+	{include file="clientes.show.tpl.html"}
+{elseif $action eq "delete"}
+	{include file="clientes.show.tpl.html"}
+{elseif $action eq "edit"}
+	{include file="clientes.edit.tpl.html"}
+{else}
+	{include file="clientes.listado.tpl.html"}
+{/if}

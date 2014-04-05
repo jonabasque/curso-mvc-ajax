@@ -1,0 +1,9 @@
+<label >ID: {$datos.0.id}</label><br/>
+<label>Nombre:{$datos.0.nombre}</label>	<br/>
+<label>CIF:{$datos.0.cif}</label>	<br/>
+{if isset($delete)}
+	<a href='index.php?module=clientes&action=delete&id={$datos.0.id}&confirm=1'>Borrar Realmente</a><br/>
+{/if}
+
+
+<a href='index.php?module=clientes&action=listado'>Volver</a>

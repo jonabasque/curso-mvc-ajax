@@ -1,0 +1,14 @@
+<form id="login" name="login" 
+		action="index.php?module=usuarios&action=login" method="post">
+	<label for="data[username]">Nombre de usuario</label>
+	<input type="text" id="username" tabindex="1" 
+	name="data[username]" value="{$datos.username}"/><br />
+	<label for="data[password]">password</label>
+	<input type="password" id="password" tabindex="2" 
+	name="data[password]" value=""/><br />
+	<input 
+	type="submit" name="data[submit]" 
+	id="submit" value="Enviar"/><br />
+</form>
+<br/>
+<a href="index.php?module=usuarios&action=listado">Volver</a>

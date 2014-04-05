@@ -57,24 +57,26 @@ class Cclientes extends Controlador{
 				$sql.=$cif;
 				//cierro la sql
 				$sql.=")";
-				echo $sql."<br/>";
+				//echo $sql."<br/>";
 				//ejecuto la sql
 				$respuesta=$this->insert($sql);
 				
 				if ($respuesta>0) {
 					//la ha añadido
-					echo "Datos guardados";
-					$this->action_listado();
+					$mensaje= "Datos guardados";
+					$this->pasa_vista("mensaje", $mensaje);
+					$this->redir("listado");
 				}else{
 					//ha fallado el salvado
 					echo "Ha ocurrido un fallo al guardar";
 				}
 				echo "<br/>";
-			}else{
-				include "vistas/vadd.php";
 			}
 		}else{
-			include "vistas/vadd.php";
+			$datos=array();
+			$datos['nombre']="";
+			$datos['cif']="";
+			$this->pasa_vista("datos", $datos);
 		}
 		
 		
@@ -99,42 +101,39 @@ class Cclientes extends Controlador{
 				$sql.="nombre='".$datos['nombre']."', ";
 				$sql.="cif='".$datos['cif']."' ";
 				$sql.=" where id=".$datos['id'];
-				echo $sql."<br/>";
+				//echo $sql."<br/>";
 				//ejecuto la sql
 				$respuesta=$this->update($sql);
 				if ($respuesta==1) {
 					//la ha añadido
-					echo "Datos guardados";
-					$this->action_listado();
+					$mensaje= "Datos guardados";
+					
 				}else{
 					//ha fallado el salvado
-					echo "Ha ocurrido un fallo al guardar";
+					$mensaje= "Ha ocurrido un fallo al guardar";
 				}
-				echo "<br/>";
-			}else{
-				include "vistas/vedit.php";
+				$this->pasa_vista("mensaje", $mensaje);
+				$this->redir("listado");
 			}
 		}else{
 			$sql="select * from cliente where id=".$_GET['id'];
 			$datos=$this->consulta($sql);
-			echo $sql;
+			//echo $sql;
 			
 			$datos=$datos[0];
-			include "vistas/vedit.php";
+			$this->pasa_vista("datos", $datos);
 		}
 	
 	}
-	function action_show($delete=false){
+	function action_show(){
 		
 	$sql = "select * from cliente where id=".
 	$_GET['id'];
-	print_r($sql);
+	//print_r($sql);
 	echo "<br/>";
 	$datos=$this->consulta($sql);
+	$this->pasa_vista("datos", $datos);
 	
-	if (is_array($datos) && count($datos)>0) {
-		include_once "vistas/vshow.php";
-	}
 	
 	}
 	function action_delete(){
@@ -147,14 +146,16 @@ class Cclientes extends Controlador{
 			$respuesta=$this->delete($sql);
 			
 			if($respuesta==1){
-				echo "Elemento Borrado<br/>";
+				$mensaje= "Elemento Borrado<br/>";
 			}else{
-				echo "Fallo en la BBDD, ".
+				$mensaje= "Fallo en la BBDD, ".
 				"contracte con el administrador! JURL!";
 			}
-			$this->action_listado();
+			$this->pasa_vista("mensaje", $mensaje);
+			$this->redir("listado");
 		}else{
-			$this->action_show(true);
+			$this->pasa_vista("delete", true);
+			$this->action_show();
 		}
 	}
 }

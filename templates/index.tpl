@@ -7,7 +7,7 @@
 {if $modulo eq "clientes"}
 	{include file="clientes.tpl.html"}
 {elseif $modulo eq "usuarios"}
-	{include file="usuarios.tpl"}
+	{include file="usuarios.tpl.html"}
 {elseif $modulo eq "socios"}
 	{include file="socios.tpl"}
 {else}

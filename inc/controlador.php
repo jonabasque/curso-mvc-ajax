@@ -41,6 +41,11 @@ class Controlador{
 	function pasa_vista($nombre,$valor){
 		$this->vista->pasa_vista($nombre,$valor);
 	}
+	function redir($action){
+		$nfunc="action_".$action;
+		$this->pasa_vista("action", $action);
+		$this->$nfunc();
+	}
 	function comprobar_email($email){
 	    $mail_correcto = 0;
 	    //compruebo unas cosas primeras
