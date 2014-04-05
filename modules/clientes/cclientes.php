@@ -5,22 +5,7 @@ class Cclientes extends Controlador{
 		parent::Controlador($module,$modelo);
 		$this->carga_accion();
 	}
-	function cogedatos($data){
-		$array=array();
-		$num=mysql_numrows($data);
-		$i=0;
-		while ($i < $num) {
-			$array[$i]=array();
-			$id=mysql_result($data,$i,"id");
-			$array[$i]['id']=$id;
-			$nombre=mysql_result($data,$i,"nombre");
-			$array[$i]['nombre']=$nombre;
-			$cif=mysql_result($data,$i,"cif");
-			$array[$i]['cif']=$cif;
-			$i++;
-		}
-		return $array;
-	}
+	
 	
 	function action_listado(){
 		$sql = "select * from cliente";
@@ -33,8 +18,8 @@ class Cclientes extends Controlador{
 		
 		}
 		echo $sql."<br/>";
-		$respuesta=$this->consulta($sql);
-		$datos=$this->cogedatos($respuesta);
+		$datos=$this->consulta($sql);
+		
 		include_once "vistas/vlistado.php";
 	}
 	function action_index(){
@@ -70,9 +55,9 @@ class Cclientes extends Controlador{
 				$sql.=")";
 				echo $sql."<br/>";
 				//ejecuto la sql
-				$respuesta=$this->consulta($sql);
-				$respuesta=mysql_affected_rows();
-				if ($respuesta==1) {
+				$respuesta=$this->insert($sql);
+				
+				if ($respuesta>0) {
 					//la ha añadido
 					echo "Datos guardados";
 					$this->action_listado();
@@ -112,9 +97,8 @@ class Cclientes extends Controlador{
 				$sql.=" where id=".$datos['id'];
 				echo $sql."<br/>";
 				//ejecuto la sql
-				$respuesta=$this->consulta($sql);
-				$respuesta=mysql_affected_rows();
-				if ($respuesta>=0) {
+				$respuesta=$this->update($sql);
+				if ($respuesta==1) {
 					//la ha añadido
 					echo "Datos guardados";
 					$this->action_listado();
@@ -128,9 +112,9 @@ class Cclientes extends Controlador{
 			}
 		}else{
 			$sql="select * from cliente where id=".$_GET['id'];
-			$respuesta=$this->consulta($sql);
+			$datos=$this->consulta($sql);
 			echo $sql;
-			$datos=$this->cogedatos($respuesta);
+			
 			$datos=$datos[0];
 			include "vistas/vedit.php";
 		}
@@ -142,8 +126,8 @@ class Cclientes extends Controlador{
 	$_GET['id'];
 	print_r($sql);
 	echo "<br/>";
-	$respuesta=$this->consulta($sql);
-	$datos=$this->cogedatos($respuesta);
+	$datos=$this->consulta($sql);
+	
 	if (is_array($datos) && count($datos)>0) {
 		include_once "vistas/vshow.php";
 	}
@@ -156,8 +140,8 @@ class Cclientes extends Controlador{
 			//borrar realmente
 			$sql="delete from cliente where id=".
 			$_GET['id'];
-			$respuesta=$this->consulta($sql);
-			$respuesta=mysql_affected_rows();
+			$respuesta=$this->delete($sql);
+			
 			if($respuesta==1){
 				echo "Elemento Borrado<br/>";
 			}else{

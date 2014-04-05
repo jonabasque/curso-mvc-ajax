@@ -7,8 +7,7 @@
 	}?></label>	<br/>
 <?php
 if ($delete==true) {
-	echo "<a href='index.php?module=clientes&action=delete&id=".
-			$datos[0]['id']."&confirm=1'>Borrar Realmente</a><br/>";
+	echo "<a href='index.php?module=clientes&action=delete&id=".$datos[0]['id']."&confirm=1'>Borrar Realmente</a><br/>";
 }
 ?>
 <a href='index.php?module=clientes&action=listado'>Volver</a>

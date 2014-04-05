@@ -1,4 +1,15 @@
 <?php
+class Cusuarios extends Controlador{
+	function Cusuarios($module,&$modelo){
+		parent::Controlador($module,$modelo);
+		global $host,$username,$password,$database;
+		$database="usuarios";
+		//cargo el modelo
+		$modelo->desconecta();
+		$modelo=new Modelo($host,$username,$password,$database);
+		
+		$this->carga_accion();
+	}
 function cogedatosusuarios($data){
 	$array=array();
 	$num=mysql_numrows($data);
@@ -78,10 +89,10 @@ function cogedatospais($data){
 			}
 		
 	}
-	function usuarios_action_register(){
+	function action_register(){
 		$sql="select * from ciudad";
-		$respuesta=consulta($sql);
-		$ciudades=cogedatosciudad($respuesta);
+		$respuesta=$this->consulta($sql);
+		$ciudades=$this->cogedatosciudad($respuesta);
 		if (isset($_POST['user'])) {
 			$fallo=0;
 			$user=$_POST['user'];
@@ -115,7 +126,7 @@ function cogedatospais($data){
 				$errores['pass2'][]="Los dos campos de la contraseña".
 				" deben coincidir.<br/>";
 			}
-			if (!comprobar_email($user['email'])) {
+			if (!$this->comprobar_email($user['email'])) {
 				$errores['email'][]="Debe introducir un email "
 				." válido";
 			}
@@ -178,7 +189,7 @@ function cogedatospais($data){
 					echo mysql_errno()."<br/>";
 				}
 				echo "<br/>";
-				usuarios_action_listado();
+				$this->action_listado();
 		
 			}
 		} else {
@@ -190,10 +201,10 @@ function cogedatospais($data){
 	function conectabbddusuarios(){
 		global $host, $username, $password;
 		$database="usuarios";
-		desconecta();
-		conecta($host,$username,$password,$database);
+		$this->modelo->desconecta();
+		$this->modelo->conecta($host,$username,$password,$database);
 	}
-	function usuarios_action_listado(){
+	function action_listado(){
 		
 		$sql = "select * from usuario";
 		if(isset($_POST['patron'])
@@ -209,33 +220,33 @@ function cogedatospais($data){
 		
 		}
 		echo $sql."<br/>";
-		$respuesta=consulta($sql);
-		$datos=cogedatosusuarios($respuesta);
+		$respuesta=$this->consulta($sql);
+		$datos=$this->cogedatosusuarios($respuesta);
 		
 		include_once "vistas/vlistado.php";
 
 	}
-	function usuarios_action_add(){
+	function action_add(){
 		
 	}
-	function usuarios_action_show(){
+	function action_show(){
 		$sql = "select * from usuario where id=".
 		$_GET['id'];
-		$respuesta=consulta($sql);
-		$datos=cogedatosusuarios($respuesta);
+		$respuesta=$this->consulta($sql);
+		$datos=$this->cogedatosusuarios($respuesta);
 		include_once "vistas/vshow.php";
 	}
-	function usuarios_action_edit(){
+	function action_edit(){
 		
 	}
-	function usuarios_action_delete(){
+	function action_delete(){
 		
 		if(isset($_GET['confirm'])
 		&&$_GET['confirm']==1){
 			
 			$sql="delete from usuario where id=".
 			$_GET['id'];
-			$respuesta=consulta($sql);
+			$respuesta=$this->consulta($sql);
 			$respuesta=mysql_affected_rows();
 			if($respuesta==1){
 				echo "borrado usuario";	
@@ -243,15 +254,14 @@ function cogedatospais($data){
 				echo "fallo al borrar";
 			}
 		}else{
-			usuarios_action_show(true);
+			$this->action_show(true);
 			
 		}
 		
 
 	}
-	function usuarios_action_index(){
-		usuarios_action_listado();
+	function action_index(){
+		$this->action_listado();
 	}
-conectabbddusuarios();
-carga_accion($module);
+}
 ?>
