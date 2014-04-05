@@ -67,14 +67,35 @@ class Control{
 		
 	}
 	function tengopermiso($module){
-		if($module=='usuarios' && !isset($_SESSION['user'])){
-			if($_GET['action']=="login"){
-				return true;
-			}else{
-				return false;
+		if ($module=="usuarios") {
+			if (isset($_GET['action'])) {
+				$action=$_GET['action'];
+			} else {
+				$action="index";
 			}
+			if ($action=="login" || $action=="register") {
+				return true;
+			} else {
+				if (isset($_SESSION['user']) 
+				&& $_SESSION['user']['username']=="admin") {
+					$this->vista->pasa_vista("menuadmin", true);
+					return true;
+				} else {
+					if (isset($_SESSION['user']) &&
+						$action=="logout"
+						) {
+						return true;
+					} else {
+						return false;
+					}
+					
+				}
+				
+			}
+		} else {
+			return true;
 		}
-		return true;
+		
 	}
 }
 ?>
