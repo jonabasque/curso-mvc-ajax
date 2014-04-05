@@ -1,11 +1,21 @@
 <?php
 
 class Cclientes extends Controlador{
+	var $nolayout=false;
 	function Cclientes($module,&$modelo,&$vista){
 			parent::Controlador($module,$modelo,$vista);
+			if (isset($_GET['output'])) {
+				$this->nolayout=true;
+				$this->pasa_vista("output",$_GET['output']);
+			}
 			$this->carga_accion();
-			$vista->display("index.tpl");
-		}
+			if ($this->nolayout==false) {
+				$vista->display("index.tpl");	
+			}else{
+				$vista->display("restclientes.tpl");
+			}
+			
+	}
 	
 	
 	function action_listado(){

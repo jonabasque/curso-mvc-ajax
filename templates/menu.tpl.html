@@ -2,6 +2,16 @@
 	<h2>Menú principal</h2>
     	<ol>
 	    	<li><a href="index.php">Inicio</a></li>
-	    	
+	    	<li><a id="enlaceclientes" href="index.php?module=clientes&action=listado">Clientes</a></li>
     	</ol>
 </div>
+<script>
+$(document).ready(function(){
+	$("#enlaceclientes").click(function(evento){
+		evento.preventDefault();
+		$("#contenido").load("index.php?module=clientes&action=listado&output=htmlp", function(data){
+			
+		});
+	});
+});
+</script>

@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<script type="text/javascript" 
+src="js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.validate.js"></script>
+<style type="text/css">
+#login2 { width: 500px; }
+#login2 label { width: 250px; }
+#login2 label.error, #commentForm input.submit { margin-left: 253px; }
+#login { width: 670px; }
+#login label.error {
+	margin-left: 10px;
+	width: auto;
+	display: inline;
+}
+
+</style>
+</head>
+<body>
+<a id="enlaceajax" href="index2.jsp">enlace</a>
+<div id="destino"></div>
+<form id="jform" action="index2.jsp" method="post">
+	<input id="texto" type="text" name="texto" value="valor"/>
+	<input id="submit" type="submit" name="submit" value="submit"/>
+</form>
+<form id="login" action="login.jsp" method="post">
+	<label for="username">Nombre de Usuario</label>
+	<input id="username" type="text" name="username" value="pepesan"/>
+	<label for="pass">Password</label>
+	<input id="pass" type="text" name="pass" value="pepesan"/>
+	<input id="submit2" type="submit" name="submit2" value="submit2"/>
+</form>
+<form id="login2" action="login.jsp" method="post">
+	<label for="username2">Nombre de Usuario</label>
+	<input id="username2" type="text" name="username2" value="pepesan"/>
+	<label for="pass2">Password</label>
+	<input id="pass2" type="text" name="pass2" value="pepesan"/>
+	<input id="submit3" type="submit" name="submit3" value="submit3"/>
+</form>
+<script>
+$.validator.setDefaults({
+	submitHandler: function() { alert("submitted!"); }
+});
+$(document).ready(function(){
+	$("#enlaceajax").click(function(evento){
+		evento.preventDefault();
+		$("#destino").load("echo", function(data){
+			
+		});
+	});
+	$("#submit").click(function(evento){
+		evento.preventDefault();
+		$("#destino").load("echo",{'texto': $("#texto").val()}, function(data){
+			
+		});
+	});
+	$("#submit2").click(function(evento){
+		evento.preventDefault();
+		$("#destino").load("login",{'username': $("#username").val()}, function(data){
+			if(data="yes"){
+				$("#destino").html("S�!");
+			}
+		});
+	});
+	
+	$("#login2").validate({
+		rules: {
+			username2: {
+				required: true,
+				minlength: 2
+			},
+			pass2: {
+				required: true,
+				minlength: 5
+			}
+			
+		},
+		messages: {
+			username2: {
+				required: "Please enter a username",
+				minlength: "Your username must consist of at least 2 characters"
+			},
+			pass2: {
+				required: "Please provide a password",
+				minlength: "Your password must be at least 5 characters long"
+			}
+		},
+		submitHandler: function() {
+			$.post("login",{'username': $("#username2").val()}, function(data){
+				if(data="yes"){
+					$("#destino").html("OLE!");
+				}
+			});
+		}
+	});
+});
+</script>
+
+
+</body>
+</html>

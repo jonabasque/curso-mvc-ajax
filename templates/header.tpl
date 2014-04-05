@@ -6,6 +6,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>{if $session.idioma eq "es"}Título{else}Tituloa{/if}</title>
 <link href="css/estilo.css" rel="stylesheet">
+<script type="text/javascript" 
+src="js/jquery-1.7.1.min.js"></script>
 </head>
 <body>
 <div id="wrapper">
