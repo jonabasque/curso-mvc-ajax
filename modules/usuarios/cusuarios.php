@@ -57,6 +57,12 @@ class Cusuarios extends Controlador{
 					}
 					
 					if($encpass==$respuesta[0]['pass']){
+						$_SESSION['user']=array();
+						$_SESSION['user']['username']=$respuesta[0]['username'];
+						$_SESSION['user']['userid']=$respuesta[0]['id'];
+						$_SESSION['user']['email']=$respuesta[0]['email'];
+						$this->pasa_vista("session", $_SESSION);
+						$this->pasa_vista("presentalogin", false);
 						$mensaje="bienvenido ".$datos['username'];
 						$this->pasa_vista("mensaje", $mensaje);
 						$this->redir("validated");
@@ -78,6 +84,12 @@ class Cusuarios extends Controlador{
 		
 		
 	}
+	function action_logout(){
+		unset($_SESSION['user']);
+		$this->pasa_vista("session", $_SESSION);
+		$this->pasa_vista("presentalogin", true);
+		
+	} 
 	function action_validated(){
 		
 	}

@@ -9,7 +9,9 @@ class Controlador{
 		$this->modelo=$modelo;
 		$this->vista=$vista;
 		$this->pasa_vista("modulo",$module);
-		
+		if (!isset($_SESSION['pasos'])) {
+			$_SESSION['pasos']=array();
+		}
 	}
 	function carga_accion(){
 		//seleccion de la accion
@@ -22,6 +24,8 @@ class Controlador{
 			$this->action="index";
 		}
 		$this->pasa_vista("action", $this->action);
+		//$_SESSION['pasos'][]=$this->module.$this->action;
+		//print_r($_SESSION['pasos']);
 		//ejecucion de la accion
 		$nombrefunc="action_".$this->action;
 		$this->$nombrefunc();

@@ -10,6 +10,8 @@
 	{include file="usuarios.tpl.html"}
 {elseif $modulo eq "socios"}
 	{include file="socios.tpl"}
+{elseif $modulo eq "error"}
+	{include file="error.tpl.html"}
 {else}
 	{include file="main.tpl"}
 {/if}

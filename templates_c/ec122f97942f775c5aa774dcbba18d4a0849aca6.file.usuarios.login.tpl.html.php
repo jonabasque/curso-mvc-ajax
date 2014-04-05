@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2012-04-02 12:50:14
+<?php /* Smarty version Smarty-3.1.8, created on 2012-04-03 10:27:04
          compiled from ".\templates\usuarios.login.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:26594f79846692cda8-69878036%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:263854f7ab458604bc3-94918572%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '26594f79846692cda8-69878036',
+  'nocache_hash' => '263854f7ab458604bc3-94918572',
   'function' => 
   array (
   ),
@@ -21,9 +21,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.8',
-  'unifunc' => 'content_4f798466938032_15101467',
+  'unifunc' => 'content_4f7ab45860cfc9_65331817',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_4f798466938032_15101467')) {function content_4f798466938032_15101467($_smarty_tpl) {?><form id="login" name="login" 
+<?php if ($_valid && !is_callable('content_4f7ab45860cfc9_65331817')) {function content_4f7ab45860cfc9_65331817($_smarty_tpl) {?><form id="login" name="login" 
 		action="index.php?module=usuarios&action=login" method="post">
 	<label for="data[username]">Nombre de usuario</label>
 	<input type="text" id="username" tabindex="1" 

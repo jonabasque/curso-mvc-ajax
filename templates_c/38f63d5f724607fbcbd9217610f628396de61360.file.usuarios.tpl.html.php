@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2012-04-02 14:17:36
+<?php /* Smarty version Smarty-3.1.8, created on 2012-04-03 13:56:35
          compiled from ".\templates\usuarios.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:316904f7998e06a8110-34339714%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:133254f7ae573459644-26897075%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '38f63d5f724607fbcbd9217610f628396de61360' => 
     array (
       0 => '.\\templates\\usuarios.tpl.html',
-      1 => 1333367670,
+      1 => 1333443998,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '316904f7998e06a8110-34339714',
+  'nocache_hash' => '133254f7ae573459644-26897075',
   'function' => 
   array (
   ),
@@ -21,9 +21,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.8',
-  'unifunc' => 'content_4f7998e0723e13_44782128',
+  'unifunc' => 'content_4f7ae5734e5585_67901752',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_4f7998e0723e13_44782128')) {function content_4f7998e0723e13_44782128($_smarty_tpl) {?><?php if ($_smarty_tpl->tpl_vars['action']->value=="listado"){?>
+<?php if ($_valid && !is_callable('content_4f7ae5734e5585_67901752')) {function content_4f7ae5734e5585_67901752($_smarty_tpl) {?><?php if ($_smarty_tpl->tpl_vars['action']->value=="listado"){?>
 	<?php echo $_smarty_tpl->getSubTemplate ("usuarios.listado.tpl.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, null, array(), 0);?>
 
 <?php }elseif($_smarty_tpl->tpl_vars['action']->value=="add"){?>
@@ -40,6 +40,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 
 <?php }elseif($_smarty_tpl->tpl_vars['action']->value=="login"){?>
 	<?php echo $_smarty_tpl->getSubTemplate ("usuarios.login.tpl.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, null, array(), 0);?>
+
+<?php }elseif($_smarty_tpl->tpl_vars['action']->value=="logout"){?>
+	<?php echo $_smarty_tpl->getSubTemplate ("usuarios.logout.tpl.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, null, array(), 0);?>
 
 <?php }elseif($_smarty_tpl->tpl_vars['action']->value=="register"){?>
 	<?php echo $_smarty_tpl->getSubTemplate ("usuarios.register.tpl.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, null, array(), 0);?>

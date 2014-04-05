@@ -4,13 +4,15 @@
   <head>
    
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Titulo</title>
+<title>{if $session.idioma eq "es"}Título{else}Tituloa{/if}</title>
 <link href="css/estilo.css" rel="stylesheet">
 </head>
 <body>
 <div id="wrapper">
 <div id="header">
 <h1>Titulo de mi plantilla</h1>
+{include file="menuidioma.tpl.html"}
+{include file="menuusuario.tpl.html"}
 </div>
 {include file="menu.tpl.html"}
 

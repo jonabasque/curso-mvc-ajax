@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2012-04-02 10:02:59
+<?php /* Smarty version Smarty-3.1.8, created on 2012-04-03 11:17:11
          compiled from ".\templates\clientes.add.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:191854f795d33638338-54141380%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:281064f7ac0173ce343-60056317%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '191854f795d33638338-54141380',
+  'nocache_hash' => '281064f7ac0173ce343-60056317',
   'function' => 
   array (
   ),
@@ -21,9 +21,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.8',
-  'unifunc' => 'content_4f795d33648e41_16743887',
+  'unifunc' => 'content_4f7ac0173dc544_32622738',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_4f795d33648e41_16743887')) {function content_4f795d33648e41_16743887($_smarty_tpl) {?><form id="add" name="add" 
+<?php if ($_valid && !is_callable('content_4f7ac0173dc544_32622738')) {function content_4f7ac0173dc544_32622738($_smarty_tpl) {?><form id="add" name="add" 
 		action="index.php?module=clientes&action=add" method="post">
 	<label for="data[nombre]">Nombre de Cliente</label>
 	<input type="text" id="nombre" tabindex="1" 

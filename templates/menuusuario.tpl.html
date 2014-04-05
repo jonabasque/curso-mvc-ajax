@@ -1,0 +1,24 @@
+<div id="menuuser">
+	{if $presentalogin eq true}
+	<form id="login" name="login" 
+		action="index.php?module=usuarios&action=login" method="post">
+	<label for="data[username]">Nombre de usuario</label>
+	<input type="text" id="username" tabindex="1" 
+	name="data[username]" value=""/>
+	<label for="data[password]">password</label>
+	<input type="password" id="password" tabindex="2" 
+	name="data[password]" value=""/>
+	<input 
+	type="submit" name="data[submit]" 
+	id="submit" value="Enviar"/>
+</form>
+	{else}
+		Bienvenido, {$session.user.username}!<br/>
+		<a href="index.php?module=usuarios&action=logout">Desconectar</a>
+		<ol>
+		<li><a href="index.php?module=clientes">Clientes</a></li>
+	    	<li><a href="index.php?module=usuarios">Usuarios</a></li>
+	    	<li><a href="index.php?module=socios">Socios</a></li>
+	    	</ol>
+	{/if}
+</div>
