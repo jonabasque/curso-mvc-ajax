@@ -23,30 +23,7 @@ function cogedatosusuarios($data){
 	}
 	return $array;
 }
-function imprimeusuarios($datos){
-	if (is_array($datos)) {
-		echo "<table>";
-		foreach ($datos as $key => $value) {
-			echo "<tr>";
-			echo "<td>".$value['userid']."</td>";
-			echo "<td>".$value['username']."</td>";
-			echo "<td>".$value['email']."</td>";
-			echo "<td>";
-			echo "<a href='mostrarusuario.php?id=".
-			$value['userid']."'>Mostrar</a>";
-			echo "<br/>";
-			echo "<a href='editarusuario.php?id=".
-			$value['userid']."'>Editar</a>";
-			echo "<br/>";
-			echo "<a href='borrarusuario.php?id=".
-			$value['userid']."'>Borrar</a>";
-			echo "<br/>";
-			echo "</td>";
-			echo "</tr>";
-		}
-		echo "</table>";
-	}
-}
+
 function cogedatosprov($data){
 	$array=array();
 	$num=mysql_numrows($data);
@@ -101,5 +78,180 @@ function cogedatospais($data){
 			}
 		
 	}
+	function usuarios_action_register(){
+		$sql="select * from ciudad";
+		$respuesta=consulta($sql);
+		$ciudades=cogedatosciudad($respuesta);
+		if (isset($_POST['user'])) {
+			$fallo=0;
+			$user=$_POST['user'];
+			$errores=array();
+			foreach ($user as $key => $value) {
+				if ($key!="envio" 
+				&& ($value==null || $value=="")) {
+					$errores[$key]=array();
+					$errores[$key][]="El campo está vacío<br/>";	
+				}
+			}
+			if (strlen($user['usuario'])>12 
+				|| strlen($user['usuario'])<6) {
+				$errores['usuario'][]="El campo debe tener ".
+				"entre 6 y 12 caracteres.<br/>";
+			}
+			if (strlen($user['pass'])>20 
+				|| strlen($user['pass'])<8) {
+				$errores['pass'][]="El campo debe tener ".
+				"entre 8 y 20 caracteres.<br/>";
+			}
+			if (strlen($user['pass2'])>20 
+				|| strlen($user['pass2'])<8) {
+				$errores['pass2'][]="El campo debe tener ".
+				"entre 8 y 20 caracteres.<br/>";
+			}
+			if ($user['pass']!=$user['pass2'] || 
+				($user['pass']==null && $user['pass2']==null)) {
+				$errores['pass'][]="Los dos campos de la contraseña".
+				" deben coincidir.<br/>";
+				$errores['pass2'][]="Los dos campos de la contraseña".
+				" deben coincidir.<br/>";
+			}
+			if (!comprobar_email($user['email'])) {
+				$errores['email'][]="Debe introducir un email "
+				." válido";
+			}
+			if(!isset($user['cond'])){
+				$errores['cond']=array();
+				$errores['cond'][]="Debe aceptar las condiciones.<br/>";
+			}
+			if (!preg_match('`[a-z]`',$user['pass'])){
+				$errores['pass'][]="La clave debe tener al menos una letra minúscula<br/>";
+			}
+		   	if (!preg_match('`[A-Z]`',$user['pass'])){
+		      	$errores['pass'][]="La clave debe tener al menos una letra mayúscula<br/>";
+		   	}
+		   	if (!preg_match('`[0-9]`',$user['pass'])){
+		      	$errores['pass'][]="La clave debe tener al menos un número<br/>";
+		   	}
+			if(count($errores)!=0){
+				$fallo=1;
+				//print_r($errores);
+			}
+			if($fallo==1){
+				include "vistas/vadd.php";	
+			}else{
+				// insert into cliente values (
+				// NULL,'$datos['nombre']','$datos['cif']'
+				//)
+				$sql = "insert into usuario values (".
+				"NULL,'".$user['usuario']."','".
+				$user['pass']."',".
+				"'".$user['email']."',".
+				"'".$user['cp']."',"
+				;
+				
+				$sql.=$user['idciudad'].",";
+				if($user['envio']=="si"){
+					$envio=1;
+				}else{
+					$envio=0;
+				}
+				$sql.=$envio.",";
+				if(isset($user['cond'])){
+					$cond=1;
+				}else{
+					$cond=0;
+				}
+				$sql.=$cond;
+				$sql.=")";
+				echo $sql."<br/>";
+				//ejecuto la sql
+				$respuesta=consulta($sql);
+				$respuesta=mysql_affected_rows();
+				if ($respuesta==1) {
+					//la ha añadido
+					echo "Datos guardados<br/>";
+					
+				}else{
+					//ha fallado el salvado
+					echo "Ha ocurrido un fallo al guardar";
+					echo mysql_error()."<br/>";
+					echo mysql_errno()."<br/>";
+				}
+				echo "<br/>";
+				usuarios_action_listado();
+		
+			}
+		} else {
+			
+			include "vistas/vadd.php";
+		}
+
+	}
+	function conectabbddusuarios(){
+		global $host, $username, $password;
+		$database="usuarios";
+		desconecta();
+		conecta($host,$username,$password,$database);
+	}
+	function usuarios_action_listado(){
+		
+		$sql = "select * from usuario";
+		if(isset($_POST['patron'])
+			&& $_POST['patron']!=null 
+			&& $_POST['patron']!=""){
+			$sql.=" where ";
+			$sql.=" username LIKE '%".$_POST['patron']."%' ";
+			$sql.=" OR email LIKE '%".$_POST['patron']."%' ";
+			$sql.=" OR idciudad IN (
+					Select idciudad 
+					from ciudad 
+					where nombre LIKE '%".$_POST['patron']."%' )";
+		
+		}
+		echo $sql."<br/>";
+		$respuesta=consulta($sql);
+		$datos=cogedatosusuarios($respuesta);
+		
+		include_once "vistas/vlistado.php";
+
+	}
+	function usuarios_action_add(){
+		
+	}
+	function usuarios_action_show(){
+		$sql = "select * from usuario where id=".
+		$_GET['id'];
+		$respuesta=consulta($sql);
+		$datos=cogedatosusuarios($respuesta);
+		include_once "vistas/vshow.php";
+	}
+	function usuarios_action_edit(){
+		
+	}
+	function usuarios_action_delete(){
+		
+		if(isset($_GET['confirm'])
+		&&$_GET['confirm']==1){
+			
+			$sql="delete from usuario where id=".
+			$_GET['id'];
+			$respuesta=consulta($sql);
+			$respuesta=mysql_affected_rows();
+			if($respuesta==1){
+				echo "borrado usuario";	
+			}else{
+				echo "fallo al borrar";
+			}
+		}else{
+			usuarios_action_show(true);
+			
+		}
+		
+
+	}
+	function usuarios_action_index(){
+		usuarios_action_listado();
+	}
+conectabbddusuarios();
+carga_accion($module);
 ?>
-<h1>Gestion de Usuarios</h1>

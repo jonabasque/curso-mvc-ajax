@@ -6,6 +6,7 @@
         <meta http-equiv="Content-Type" 
         content="text/html; charset=utf-8" />
         <title>MVC Ejemplo</title>
+        <link rel="stylesheet" type="text/css" href="tema/css/estilo.css" media="screen" />
     </head>
     <body>
     	<?php

@@ -1,16 +1,29 @@
 <?php
-function carga_accion($module){
-	//seleccion de la accion
-	if (isset($_GET['action'])
-		&& $_GET['action']!=NULL
-		&& $_GET['action']!=""
-	) {
-		$action=$_GET['action'];
-	}else{
-		$action="index";
+class Controlador{
+	var $module;
+	var $action;
+	var $modelo;
+	function Controlador($module,$modelo){
+		$this->module=$module;
+		$this->modelo=$modelo;
+		
 	}
-	//ejecucion de la accion
-	$nombrefunc=$module."_action_".$action;
-	$nombrefunc();
+	function carga_accion(){
+		//seleccion de la accion
+		if (isset($_GET['action'])
+			&& $_GET['action']!=NULL
+			&& $_GET['action']!=""
+		) {
+			$this->action=$_GET['action'];
+		}else{
+			$this->action="index";
+		}
+		//ejecucion de la accion
+		$nombrefunc=$this->module."_action_".$this->action;
+		$this->$nombrefunc();
+	}
+	function consulta($sql){
+		return $this->modelo->consulta($sql);
+	}
 }
 ?>
