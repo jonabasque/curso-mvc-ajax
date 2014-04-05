@@ -8,6 +8,7 @@
 <link href="css/estilo.css" rel="stylesheet">
 <script type="text/javascript" 
 src="js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.validate.js"></script>
 </head>
 <body>
 <div id="wrapper">

@@ -4,7 +4,7 @@
 </div>
 {/if}
 
-<a href='index.php?module=clientes&action=add'>Add</a><br />
+<a id="clientes_add" href='index.php?module=clientes&action=add'>Add</a><br />
 <form action="index.php?module=clientes&action=listado" method="post">
 	<label for="patron">Buscar:</label>
 	<input type="text" name="patron" id="patron"
@@ -29,3 +29,21 @@
 			</tr>
 	{/foreach}
 </table>
+<script>
+$(document).ready(function(){
+	$("#clientes_add").click(function(evento){
+		evento.preventDefault();
+		$("#contenido").load("index.php?module=clientes&action=add&output=htmlp", function(data){
+			
+		});
+	});
+	/*
+	$("#enlaceclientes").click(function(evento){
+		evento.preventDefault();
+		$("#contenido").load("index.php?module=clientes&action=listado&output=htmlp", function(data){
+			
+		});
+	});
+	*/
+});
+</script>

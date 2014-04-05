@@ -1,5 +1,6 @@
 <?php
 class Cusuarios extends Controlador{
+	var $nolayout=false;
 	function Cusuarios($module,&$modelo,&$vista){
 		parent::Controlador($module,$modelo,$vista);
 		global $host,$username,$password,$database;
@@ -10,8 +11,18 @@ class Cusuarios extends Controlador{
 								$username,
 								$password,
 								$database);
+		print_r($_GET);
+		print_r($_POST);
+		if (isset($_GET['output'])) {
+				$this->nolayout=true;
+				$this->pasa_vista("output",$_GET['output']);
+		}
 		$this->carga_accion();
-		$vista->display("index.tpl");
+		if ($this->nolayout==false) {
+				$vista->display("index.tpl");	
+			}else{
+				$vista->display("usuarios.tpl.html");
+		}
 	}
 
 
@@ -69,9 +80,11 @@ class Cusuarios extends Controlador{
 					}else{
 						$mensaje="usuario o contraseña Inválidos ";
 						$this->pasa_vista("datos", $datos);
+						$this->pasa_vista("presentalogin", true);
 					}
 				}else{
-					
+					$this->pasa_vista("presentalogin", true);
+					$mensaje="no hay usuario";
 				}
 				$this->pasa_vista("mensaje", $mensaje);
 			}

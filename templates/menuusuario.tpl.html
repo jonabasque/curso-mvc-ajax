@@ -12,6 +12,42 @@
 	type="submit" name="data[submit]" 
 	id="submit" value="Enviar"/>
 </form>
+<script>
+$.validator.setDefaults({
+	submitHandler: function() { alert("submitted!"); }
+});
+$(document).ready(function(){
+$("#login").validate({
+		rules: {
+			"data[username]": {
+				required: true
+			},
+			"data[password]": {
+				required: true
+			}
+			
+		},
+		messages: {
+			"data[username]": {
+				required: "Please enter a username"
+			},
+			"data[password]": {
+				required: "Please provide a password"
+			}
+		},
+		submitHandler: function() {
+			$.post("index.php?module=usuarios&action=login&output=htmlp",
+			{
+				'data[username]': $("#username").val(),
+				'data[password]': $("#password").val()
+			}, 
+			function(data){
+				$("#menuuser").html(data);
+			});
+		}
+	});
+});
+</script>
 	{else}
 		Bienvenido, {$session.user.username}!<br/>
 		<a href="index.php?module=usuarios&action=logout">Desconectar</a>
