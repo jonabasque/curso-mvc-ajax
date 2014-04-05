@@ -84,7 +84,7 @@ class Cusuarios extends Controlador{
 	function action_register(){
 		$sql="select * from ciudad";
 		$ciudades=$this->consulta($sql);
-		
+		$this->pasa_vista("ciudades", $ciudades);
 		if (isset($_POST['user'])) {
 			$fallo=0;
 			$user=$_POST['user'];
@@ -185,7 +185,7 @@ class Cusuarios extends Controlador{
 			}
 		} else {
 			
-			include "vistas/vadd.php";
+			
 		}
 
 	}
@@ -202,13 +202,16 @@ class Cusuarios extends Controlador{
 					Select idciudad 
 					from ciudad 
 					where nombre LIKE '%".$_POST['patron']."%' )";
-		
+			$patron=$_POST['patron'];
+		}else{
+			$patron="";
 		}
-		echo $sql."<br/>";
+		$this->pasa_vista("patron", $patron);
+		//echo $sql."<br/>";
 		$datos=$this->consulta($sql);
+		$this->pasa_vista("datos", $datos);
 		
 		
-		include_once "vistas/vlistado.php";
 
 	}
 	function action_add(){
@@ -218,24 +221,23 @@ class Cusuarios extends Controlador{
 		$sql = "select * from usuario where id=".
 		$_GET['id'];
 		$datos=$this->consulta($sql);
+		$this->pasa_vista("datos", $datos);
 		 $sql="Select * from ciudad where idciudad=";
 		 $sql.=$datos[0]['idciudad'];
 		  //echo $sql;
 		  $datosc=$this->consulta($sql);
-		
+		$this->pasa_vista("datosc", $datosc);
 			  $sql="Select * from prov where idprov=";
 			  $sql.=$datosc[0]['idprov'];
 			  //echo $sql;
 			  $datospro=$this->consulta($sql);
-			
-			
+		$this->pasa_vista("datospro", $datospro);
 			  $sql="Select * from pais where idpais=";
 			  $sql.=$datospro[0]['idpais'];
 			  //echo $sql;
 			  $datosp=$this->consulta($sql);
+		$this->pasa_vista("datosp", $datosp);
 			  
-			
-		include_once "vistas/vshow.php";
 	}
 	function action_edit(){
 		
@@ -247,16 +249,17 @@ class Cusuarios extends Controlador{
 			
 			$sql="delete from usuario where id=".
 			$_GET['id'];
-			$respuesta=$this->consulta($sql);
-			$respuesta=mysql_affected_rows();
+			$respuesta=$this->delete($sql);
 			if($respuesta==1){
-				echo "borrado usuario";	
+				$mensaje= "borrado usuario";	
 			}else{
-				echo "fallo al borrar";
+				$mensaje= "fallo al borrar";
 			}
+			$this->pasa_vista("mensaje", $mensaje);
+			$this->redir("listado");
 		}else{
-			$this->action_show(true);
-			
+			$this->action_show();
+			$this->pasa_vista("delete", true);
 		}
 		
 

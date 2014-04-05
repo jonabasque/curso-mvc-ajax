@@ -1,0 +1,16 @@
+ID:	{$datos.0.id}
+<br/>
+Nombre: {$datos.0.username}
+<br/>
+Email: {$datos.0.email}
+<br/>
+CP: {$datos.0.cp}<br/>
+Ciudad:  {$datosc.0.nombre}  ({$datospro.0.nombre}) {$datosp.0.nombre}<br/>
+Acepta el boletin: {if $datos.0.boletin eq 1}Si{else}No{/if}
+<br/>
+Acepta las condiciones: {if $datos.0.acepta eq 1}Si{else}No{/if}
+<br/>
+{if isset($delete)}
+	<a href='index.php?module=usuarios&action=delete&id={$datos.0.id}&confirm=1'>Borrar Realmente</a><br/>
+{/if}
+<a href='index.php?module=usuarios&action=listado'>Volver</a>

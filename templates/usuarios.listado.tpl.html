@@ -1,0 +1,33 @@
+{if isset($mensaje) and $mensaje neq null}
+<div id="mensaje">
+{$mensaje}
+</div>
+{/if}
+<a href='index.php?module=usuarios&action=register'>Registrar</a><br />
+		<form action="index.php?module=usuarios&action=listado" method="post">
+			<label for="patron">Buscar:</label>
+			<input type="text" name="patron" id="patron"
+			value="{$patron}"
+			/>
+			<input type="submit" name="submit" id="submit" 
+			value="Buscar" />
+		</form>
+		<br/>
+		<table>
+{foreach from=$datos item=registro}
+			<tr>
+			<td>{$registro.id}</td>
+			<td>{$registro.username}</td>
+			<td>{$registro.email}</td>
+			<td>
+			<a href='index.php?module=usuarios&action=show&id={$registro.id}'>Mostrar</a>
+			<br/>
+			<a href='index.php?module=usuarios&action=edit&id={$registro.id}'>Editar</a>
+			<br/>
+			<a href='index.php?module=usuarios&action=delete&id={$registro.id}'>Borrar</a>
+			<br/>
+			</td>
+			</tr>
+		{/foreach}
+		</table>
+	

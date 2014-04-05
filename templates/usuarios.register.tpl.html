@@ -1,0 +1,101 @@
+ 	<form 
+    	name="register_user" 
+    	id="register_user" 
+    	action="index.php?module=usuarios&action=register"
+    	method="post">
+    		<label for="user[usuario]">Nombre de Usuario.<br/>
+    			{if isset($errores.usuario) and $errores.usuario neq null}
+    			{foreach from=$errores.usuario item=error}
+    				{$error}<br/>
+    			{/foreach}
+    			{/if}
+    			</label>
+    		<input type="text" name="user[usuario]"
+    			id="usuario" tabindex="1" value="{if isset($user.usuario) and $user.usuario neq ''}{$user.usuario}{/if}"
+    		 />	<br/>
+    		 <label for="user[pass]">Contraseña.<br/>
+    		 	{if isset($errores.pass) and $errores.pass neq null}
+    			{foreach from=$errores.pass item=error}
+    				{$error}<br/>
+    			{/foreach}
+    			{/if}</label>
+    		 <input type="password" name="user[pass]"
+    		 id="pass" value="" /><br/>
+    		 <label for="user[pass2]">Repita Contraseña.<br/>
+    		 	{if isset($errores.pass2) and $errores.pass2 neq null}
+    			{foreach from=$errores.pass2 item=error}
+    				{$error}<br/>
+    			{/foreach}
+    			{/if}
+    		 </label>
+    		 <input type="password" name="user[pass2]"
+    		 id="pass2" value="" /><br/>
+    		 <label for="user[email]">Email.<br/>
+    		 	{if isset($errores.email) and $errores.email neq null}
+    			{foreach from=$errores.email item=error}
+    				{$error}<br/>
+    			{/foreach}
+    			{/if}
+    		 </label>
+    		 <input type="text" name="user[email]"
+    		 id="email" value="{if isset($user.email) and $user.email neq ''}{$user.email}{/if}" /><br/>
+    		
+    		 <label for="user[ciudad]">Ciudad.<br/></label>
+    		<select name='user[idciudad]'>
+			{foreach from=$ciudades item=ciudad}
+				<option value="{$ciudad.idciudad}" 
+    		 	{if isset($user.idciudad) 
+    		 		and $user.idciudad eq $ciudad.idciudad}
+				 	 selected='true'
+				{/if}
+    		 	>{$ciudad.nombre}</option>
+			{/foreach}
+			</select><br/>
+    		
+    		 <label for="user[cp]">Código Postal.<br/>
+    		 	{if isset($errores.cp) and $errores.cp neq null}
+    			{foreach from=$errores.cp item=error}
+    				{$error}<br/>
+    			{/foreach}
+    			{/if}
+    		 </label>
+    		 <input type="text" name="user[cp]"
+    		 id="cp" value="{if isset($user.cp) and $user.cp neq ''}{$user.cp}{/if}" /><br/>
+    		 
+    		 <label for="user[envio]">Envio de boletín.<br/>
+    		 	{if isset($errores.envio) and $errores.envio neq null}
+    			{foreach from=$errores.envio item=error}
+    				{$error}<br/>
+    			{/foreach}
+    			{/if}
+    		 </label>
+    		 <label>Sí</label>
+    		 <input type="radio" name="user[boletin]"
+    		 id="envio" value="si" <?php
+    		 if (isset($user['boletin'])
+    		 &&$user['boletin']==1) { 
+    		 	echo "checked='true'";
+    		 }?>/>
+    		 <label>No</label>
+    		 <input type="radio" name="user[boletin]"
+    		 id="envio" value="no" <?php
+    		 if (isset($user['boletin'])
+    		 &&$user['boletin']==0) { 
+    		 	echo "checked='true'";
+    		 }?>/><br/>
+    		 <label for="user[cond]">Acepta las condiciones de uso?<br/>
+    		 	{if isset($errores.cond) and $errores.cond neq null}
+    			{foreach from=$errores.cond item=error}
+    				{$error}<br/>
+    			{/foreach}
+    			{/if}
+    		 </label>
+    		 <input type="checkbox" name="user[cond]"
+    		 id="cond" value="si" <?php
+    		 if (isset($user['cond'])) { 
+    		 	checkedsimanda($user['cond']);
+    		 }?>/><br/>
+    		 <input type="submit" name="user[submit]"
+    		 id="submit" value="Enviar" /><br/>
+    	</form>
+

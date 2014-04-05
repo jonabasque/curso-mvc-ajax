@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2012-04-02 11:42:41
+<?php /* Smarty version Smarty-3.1.8, created on 2012-04-02 14:17:36
          compiled from ".\templates\index.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:114554f797491d73196-08138333%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:210234f7998e0591832-96580351%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,7 +11,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '114554f797491d73196-08138333',
+  'nocache_hash' => '210234f7998e0591832-96580351',
   'function' => 
   array (
   ),
@@ -21,9 +21,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.8',
-  'unifunc' => 'content_4f797491dfb5c9_51492519',
+  'unifunc' => 'content_4f7998e0617283_30250492',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_4f797491dfb5c9_51492519')) {function content_4f797491dfb5c9_51492519($_smarty_tpl) {?><?php  $_config = new Smarty_Internal_Config("miconfiguracion.conf", $_smarty_tpl->smarty, $_smarty_tpl);$_config->loadConfigVars("setup", 'local'); ?>
+<?php if ($_valid && !is_callable('content_4f7998e0617283_30250492')) {function content_4f7998e0617283_30250492($_smarty_tpl) {?><?php  $_config = new Smarty_Internal_Config("miconfiguracion.conf", $_smarty_tpl->smarty, $_smarty_tpl);$_config->loadConfigVars("setup", 'local'); ?>
 
 <?php echo $_smarty_tpl->getSubTemplate ("header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0);?>
 
