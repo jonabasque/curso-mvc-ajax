@@ -21,4 +21,4 @@
 	id="submit" value="Enviar"/><br />
 </form>
 <br/>
-<a href="listado.php">Volver</a>
+<a href="index.php?module=clientes&action=listado">Volver</a>

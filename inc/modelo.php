@@ -16,12 +16,8 @@ class Modelo{
 	}
 	
 	function conecta(){
-		$this->link=mysql_connect(
-							$this->host,
-							$this->username,
-							$this->password);
-		mysql_select_db($this->database,
-						$this->link);
+		$this->link=mysql_connect($this->host,$this->username,$this->password);
+		mysql_select_db($this->database,$this->link);
 	}
 	function consulta($sql){
 		$respuesta=mysql_query($sql);

@@ -10,10 +10,7 @@ class Control{
 	function Control(){
 		global $host,$username,$password,$database;
 		//cargo el modelo
-		$this->modelo=new Modelo($host,
-								$username,
-								$password,
-								$database);
+		$this->modelo=new Modelo($host,$username,$password,$database);
 		//carga header
 		include_once "tema/header.php";
 		$this->cargamodulo();	

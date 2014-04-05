@@ -22,3 +22,5 @@
 	type="submit" name="data[submit]" 
 	id="submit" value="Enviar"/><br />
 </form>
+<br/>
+<a href="index.php?module=clientes&action=listado">Volver</a>

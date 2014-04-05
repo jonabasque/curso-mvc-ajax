@@ -1,7 +1,7 @@
 <?php
 
 class Cclientes extends Controlador{
-	function Cclientes($module,$modelo){
+	function Cclientes($module,&$modelo){
 		parent::Controlador($module,$modelo);
 		$this->carga_accion();
 	}
@@ -22,7 +22,7 @@ class Cclientes extends Controlador{
 		return $array;
 	}
 	
-	function clientes_action_listado(){
+	function action_listado(){
 		$sql = "select * from cliente";
 		if(isset($_POST['patron'])
 			&& $_POST['patron']!=null 
@@ -37,12 +37,12 @@ class Cclientes extends Controlador{
 		$datos=$this->cogedatos($respuesta);
 		include_once "vistas/vlistado.php";
 	}
-	function clientes_action_index(){
-		$this->clientes_action_listado();
+	function action_index(){
+		$this->action_listado();
 	}
-	function clientes_action_buscar(){
+	function action_buscar(){
 	}
-	function clientes_action_add(){
+	function action_add(){
 		if (isset($_POST['data'])) {
 			//echo "proceso del formulario";
 			$valida=false;
@@ -75,7 +75,7 @@ class Cclientes extends Controlador{
 				if ($respuesta==1) {
 					//la ha añadido
 					echo "Datos guardados";
-					$this->clientes_action_listado();
+					$this->action_listado();
 				}else{
 					//ha fallado el salvado
 					echo "Ha ocurrido un fallo al guardar";
@@ -90,7 +90,7 @@ class Cclientes extends Controlador{
 		
 		
 	}
-	function clientes_action_edit(){
+	function action_edit(){
 		
 		if (isset($_POST['data'])) {
 			//echo "proceso del formulario";
@@ -117,7 +117,7 @@ class Cclientes extends Controlador{
 				if ($respuesta>=0) {
 					//la ha añadido
 					echo "Datos guardados";
-					$this->clientes_action_listado();
+					$this->action_listado();
 				}else{
 					//ha fallado el salvado
 					echo "Ha ocurrido un fallo al guardar";
@@ -136,7 +136,7 @@ class Cclientes extends Controlador{
 		}
 	
 	}
-	function clientes_action_show($delete=false){
+	function action_show($delete=false){
 		
 	$sql = "select * from cliente where id=".
 	$_GET['id'];
@@ -149,7 +149,7 @@ class Cclientes extends Controlador{
 	}
 	
 	}
-	function clientes_action_delete(){
+	function action_delete(){
 	
 		if (isset($_GET['confirm'])
 			&&$_GET['confirm']==1) {
@@ -164,9 +164,9 @@ class Cclientes extends Controlador{
 				echo "Fallo en la BBDD, ".
 				"contracte con el administrador! JURL!";
 			}
-			$this->clientes_action_listado();
+			$this->action_listado();
 		}else{
-			$this->clientes_action_show(true);
+			$this->action_show(true);
 		}
 	}
 }

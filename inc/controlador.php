@@ -3,7 +3,7 @@ class Controlador{
 	var $module;
 	var $action;
 	var $modelo;
-	function Controlador($module,$modelo){
+	function Controlador($module,&$modelo){
 		$this->module=$module;
 		$this->modelo=$modelo;
 		
@@ -19,7 +19,7 @@ class Controlador{
 			$this->action="index";
 		}
 		//ejecucion de la accion
-		$nombrefunc=$this->module."_action_".$this->action;
+		$nombrefunc="action_".$this->action;
 		$this->$nombrefunc();
 	}
 	function consulta($sql){
