@@ -2,11 +2,12 @@
 
 include_once 'conf/config.php';
 include_once "modelo.php";
+include_once "vista.php";
 include_once "widgets.php";
 include_once 'controlador.php';
 class Control{
 	var $modelo;
-	
+	var $vista;
 	function Control(){
 		global $host,$username,$password,$database;
 		//cargo el modelo
@@ -14,11 +15,10 @@ class Control{
 								$username,
 								$password,
 								$database);
-		//carga header
-		include_once "tema/header.php";
+		$this->vista=new vista();
+		
 		$this->cargamodulo();	
-		//cargafooter
-		include_once "tema/footer.php";
+		
 		$this->modelo->desconecta();
 	}
 	
@@ -37,7 +37,7 @@ class Control{
 		$modulefile="modules/".$module."/c".$module.'.php';
 		include_once $modulefile;
 		$nclase="C".$module;
-		$objeto=new $nclase($module,$this->modelo);
+		$objeto=new $nclase($module,$this->modelo,$this->vista);
 	}
 }
 ?>

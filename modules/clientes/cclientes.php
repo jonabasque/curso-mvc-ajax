@@ -1,10 +1,11 @@
 <?php
 
 class Cclientes extends Controlador{
-	function Cclientes($module,&$modelo){
-		parent::Controlador($module,$modelo);
-		$this->carga_accion();
-	}
+	function Cclientes($module,&$modelo,&$vista){
+			parent::Controlador($module,$modelo,$vista);
+			$this->carga_accion();
+			$vista->display("index.tpl");
+		}
 	
 	
 	function action_listado(){
@@ -15,12 +16,15 @@ class Cclientes extends Controlador{
 			$sql.=" where ";
 			$sql.=" nombre LIKE '%".$_POST['patron']."%' ";
 			$sql.=" OR cif LIKE '%".$_POST['patron']."%' ";
-		
+			$patron=$_POST['patron'];	
+		}else{
+			$patron="";
 		}
-		echo $sql."<br/>";
+		$this->pasa_vista("patron", $patron);
+		//echo $sql."<br/>";
 		$datos=$this->consulta($sql);
-		
-		include_once "vistas/vlistado.php";
+		$this->pasa_vista("datos", $datos);
+		//include_once "vistas/vlistado.php";
 	}
 	function action_index(){
 		$this->action_listado();

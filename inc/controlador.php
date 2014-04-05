@@ -3,9 +3,12 @@ class Controlador{
 	var $module;
 	var $action;
 	var $modelo;
-	function Controlador($module,&$modelo){
+	var $vista;
+	function Controlador($module,&$modelo,&$vista){
 		$this->module=$module;
 		$this->modelo=$modelo;
+		$this->vista=$vista;
+		$this->pasa_vista("modulo",$module);
 		
 	}
 	function carga_accion(){
@@ -18,6 +21,7 @@ class Controlador{
 		}else{
 			$this->action="index";
 		}
+		$this->pasa_vista("action", $this->action);
 		//ejecucion de la accion
 		$nombrefunc="action_".$this->action;
 		$this->$nombrefunc();
@@ -33,6 +37,9 @@ class Controlador{
 	}
 	function delete($sql){
 		return $this->modelo->delete($sql);
+	}
+	function pasa_vista($nombre,$valor){
+		$this->vista->pasa_vista($nombre,$valor);
 	}
 	function comprobar_email($email){
 	    $mail_correcto = 0;

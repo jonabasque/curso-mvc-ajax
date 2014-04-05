@@ -5,82 +5,14 @@ class Cusuarios extends Controlador{
 		global $host,$username,$password,$database;
 		$database="usuarios";
 		//cargo el modelo
-		$modelo->desconecta();
-		$modelo=new Modelo($host,$username,$password,$database);
-		
+		$this->modelo->desconecta();
+		$this->modelo=new Modelo($host,
+								$username,
+								$password,
+								$database);
 		$this->carga_accion();
 	}
-function cogedatosusuarios($data){
-	$array=array();
-	$num=mysql_numrows($data);
-	$i=0;
-	while ($i < $num) {
-		$array[$i]=array();
-		$id=mysql_result($data,$i,"id");
-		$array[$i]['userid']=$id;
-		$nombre=mysql_result($data,$i,"username");
-		$array[$i]['username']=$nombre;
-		$email=mysql_result($data,$i,"email");
-		$array[$i]['email']=$email;
-		$cp=mysql_result($data,$i,"cp");
-		$array[$i]['cp']=$cp;
-		$idciudad=mysql_result($data,$i,"idciudad");
-		$array[$i]['idciudad']=$idciudad;
-		$boletin=mysql_result($data,$i,"boletin");
-		$array[$i]['boletin']=$boletin;
-		$acepta=mysql_result($data,$i,"acepta");
-		$array[$i]['acepta']=$acepta;
-		$i++;
-	}
-	return $array;
-}
 
-function cogedatosprov($data){
-	$array=array();
-	$num=mysql_numrows($data);
-	$i=0;
-	while ($i < $num) {
-		$array[$i]=array();
-		$id=mysql_result($data,$i,"idprov");
-		$array[$i]['idprov']=$id;
-		$nombre=mysql_result($data,$i,"nombre");
-		$array[$i]['nombre']=$nombre;
-		$idpais=mysql_result($data,$i,"idpais");
-		$array[$i]['idpais']=$idpais;
-		$i++;
-	}
-	return $array;
-}
-function cogedatosciudad($data){
-	$array=array();
-	$num=mysql_numrows($data);
-	$i=0;
-	while ($i < $num) {
-		$array[$i]=array();
-		$id=mysql_result($data,$i,"idciudad");
-		$array[$i]['id']=$id;
-		$nombre=mysql_result($data,$i,"nombre");
-		$array[$i]['nombre']=$nombre;
-		$idprov=mysql_result($data,$i,"idprov");
-		$array[$i]['idprov']=$idprov;
-		$i++;
-	}
-	return $array;
-}
-function cogedatospais($data){
-	$array=array();
-	$num=mysql_numrows($data);
-	$i=0;
-	while ($i < $num) {
-		$array[$i]=array();
-		$id=mysql_result($data,$i,"idpais");
-		$array[$i]['id']=$id;
-		$nombre=mysql_result($data,$i,"nombre");
-		$array[$i]['nombre']=$nombre;
-		$i++;
-	}
-	return $array;
-}
 
 	function seleccionaprovincia($valor,$pos,$aprovs){
 			
@@ -91,8 +23,8 @@ function cogedatospais($data){
 	}
 	function action_register(){
 		$sql="select * from ciudad";
-		$respuesta=$this->consulta($sql);
-		$ciudades=$this->cogedatosciudad($respuesta);
+		$ciudades=$this->consulta($sql);
+		
 		if (isset($_POST['user'])) {
 			$fallo=0;
 			$user=$_POST['user'];
@@ -176,17 +108,16 @@ function cogedatospais($data){
 				$sql.=")";
 				echo $sql."<br/>";
 				//ejecuto la sql
-				$respuesta=consulta($sql);
-				$respuesta=mysql_affected_rows();
-				if ($respuesta==1) {
+				$respuesta=insert($sql);
+				
+				if ($respuesta>0) {
 					//la ha añadido
 					echo "Datos guardados<br/>";
 					
 				}else{
 					//ha fallado el salvado
-					echo "Ha ocurrido un fallo al guardar";
-					echo mysql_error()."<br/>";
-					echo mysql_errno()."<br/>";
+					echo "Ha ocurrido un fallo al guardar.<br/>";
+					echo $this->modelo->getErrors();
 				}
 				echo "<br/>";
 				$this->action_listado();
@@ -197,12 +128,6 @@ function cogedatospais($data){
 			include "vistas/vadd.php";
 		}
 
-	}
-	function conectabbddusuarios(){
-		global $host, $username, $password;
-		$database="usuarios";
-		$this->modelo->desconecta();
-		$this->modelo->conecta($host,$username,$password,$database);
 	}
 	function action_listado(){
 		
@@ -220,8 +145,8 @@ function cogedatospais($data){
 		
 		}
 		echo $sql."<br/>";
-		$respuesta=$this->consulta($sql);
-		$datos=$this->cogedatosusuarios($respuesta);
+		$datos=$this->consulta($sql);
+		
 		
 		include_once "vistas/vlistado.php";
 
@@ -232,8 +157,24 @@ function cogedatospais($data){
 	function action_show(){
 		$sql = "select * from usuario where id=".
 		$_GET['id'];
-		$respuesta=$this->consulta($sql);
-		$datos=$this->cogedatosusuarios($respuesta);
+		$datos=$this->consulta($sql);
+		 $sql="Select * from ciudad where idciudad=";
+		 $sql.=$datos[0]['idciudad'];
+		  //echo $sql;
+		  $datosc=$this->consulta($sql);
+		
+			  $sql="Select * from prov where idprov=";
+			  $sql.=$datosc[0]['idprov'];
+			  //echo $sql;
+			  $datospro=$this->consulta($sql);
+			
+			
+			  $sql="Select * from pais where idpais=";
+			  $sql.=$datospro[0]['idpais'];
+			  //echo $sql;
+			  $datosp=$this->consulta($sql);
+			  
+			
 		include_once "vistas/vshow.php";
 	}
 	function action_edit(){

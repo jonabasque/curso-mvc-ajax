@@ -19,15 +19,15 @@
 		foreach ($datos as $key => $value) {
 			?>
 			<tr>
-			<td><?php echo $value['userid'];?></td>
+			<td><?php echo $value['id'];?></td>
 			<td><?php echo $value['username']?></td>
 			<td><?php echo $value['email'];?></td>
 			<td>
-			<a href='index.php?module=usuarios&action=show&id=<?php echo $value['userid'];?>'>Mostrar</a>
+			<a href='index.php?module=usuarios&action=show&id=<?php echo $value['id'];?>'>Mostrar</a>
 			<br/>
-			<a href='index.php?module=usuarios&action=edit&id=<?php echo $value['userid'];?>'>Editar</a>
+			<a href='index.php?module=usuarios&action=edit&id=<?php echo $value['id'];?>'>Editar</a>
 			<br/>
-			<a href='index.php?module=usuarios&action=delete&id=<?php echo $value['userid'];?>'>Borrar</a>
+			<a href='index.php?module=usuarios&action=delete&id=<?php echo $value['id'];?>'>Borrar</a>
 			<br/>
 			</td>
 			</tr>

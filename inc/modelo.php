@@ -20,8 +20,9 @@ class Modelo{
 	}
 	
 	function conecta(){
-		$this->db = NewADOConnection('mysql');
-		$this->db->Connect("localhost", "root", "", "clientes");
+		$this->db = NewADOConnection($this->sgbd);
+		$this->db->Connect($this->host, $this->username,
+		 $this->password,$this->database);
 	}
 	
 	function consulta($sql) {
@@ -78,7 +79,11 @@ class Modelo{
 	function getTableColumns($table) {
 		return $this->db->MetaColumnNames($table);
 	}
-	
+	function getErrors(){
+		$errores=$this->db->ErrorNo();
+		$errores.=":".$this->db->ErrorMsg();
+		return $errores;
+	}
 	function desconecta() {
 		$this->db->Close();
 	}
